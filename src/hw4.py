@@ -2,27 +2,41 @@ import cv2
 import numpy as np
 import math
 from utils import *
-from KLT import KLT
-from Sfm import Sfm
-from VideoSfm import VideoSfm
+from ImageFeatures import ImageFeatures
+import glob
 
 ################  HW2  #####################
 # Nathana Facion                 RA:191079
 # Rafael Mariottini Tomazela     RA:192803
 ############################################
 
-def run_kmeans(img):
-    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
-    flags = cv2.KMEANS_RANDOM_CENTERS
-    compactness,labels,centers = cv2.kmeans(z,2,None,criteria,10,flags)
-    return labels
 
 
 
 def main():
-    img = cv2.imread('input/p4-1-0.png')
-    kmeans_labels = run_kmeans(img)
-    print(labels)
+  
+    #imgs = [ImageFeatures(cv2.imread(path)) for path in glob.glob('input/*')
+    boat1 = ImageFeatures(cv2.imread('input/p4-images/boat_2.jpg'))
+    boat2 = ImageFeatures(cv2.imread('input/p4-images/boat_3.jpg'))
+    beach1 = ImageFeatures(cv2.imread('input/p4-images/beach_1.jpg'))
+    cherry1 = ImageFeatures(cv2.imread('input/p4-images/cherry_1.jpg'))
+    pond1 = ImageFeatures(cv2.imread('input/p4-images/pond_1.jpg'))
+    sunset = ImageFeatures(cv2.imread('input/p4-images/sunset1_5.jpg'))
+    print('boat1, boat2', boat1.calc_dissimilarity(boat2))
+    print('boat1, beach1', boat1.calc_dissimilarity(beach1))
+    print('boat1, cherry1', boat1.calc_dissimilarity(cherry1))
+    print('boat1, pond1', boat1.calc_dissimilarity(pond1))
+    print('boat1, sunset', boat1.calc_dissimilarity(sunset))
+    
+
+    #print(img)
+    #kmeans_labels = run_kmeans(img)
+    #kmeans_labels_img = kmeans_labels.reshape((img.shape[0], img.shape[1]))
+    #step_color = 255/5
+    #kmeans_label_img_color = kmeans_labels_img * step_color
+    #print(kmeans_labels_img)
+    #print(kmeans_label_img_color)
+    #debug('kmeans', kmeans_label_img_color.astype('uint8'))
     #labels_to_im = 
     #debug('img1', )
 
