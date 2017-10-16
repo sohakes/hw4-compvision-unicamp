@@ -11,52 +11,22 @@ from VideoSfm import VideoSfm
 # Rafael Mariottini Tomazela     RA:192803
 ############################################
 
-
-def run_sfm(imgs, iterations=40, dosfm=True):
-    klt = KLT()
-    corners = None
-    corners = klt.feature_tracking(imgs, iterations)
-    if dosfm:
-        sfm = Sfm()
-        sfm.structure_from_motion(imgs, corners)
+def run_kmeans(img):
+    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
+    flags = cv2.KMEANS_RANDOM_CENTERS
+    compactness,labels,centers = cv2.kmeans(z,2,None,criteria,10,flags)
+    return labels
 
 
 
 def main():
-    #corners('input/dinoR0001.png')
-    #corners('input/dinoR0002.png')
-    #corners('input/dinoR0003.png')
-    imgs1 = [cv2.imread('input/p3-1-0.png'), cv2.imread('input/p3-1-1.png')]
-    imgs2 = [cv2.imread('input/dinoR0004.png'), cv2.imread('input/dinoR0005.png'),
-            cv2.imread('input/dinoR0006.png')]    
-    imgs3 = [cv2.imread('input/templeR0001.png'), cv2.imread('input/templeR0002.png'),
-            cv2.imread('input/templeR0003.png'), cv2.imread('input/templeR0004.png'),
-            cv2.imread('input/templeR0005.png')]
-    #imgs = [cv2.imread('input/templeR0013.png'), cv2.imread('input/templeR0014.png'),
-    #        cv2.imread('input/templeR0015.png'), cv2.imread('input/templeR0016.png'),
-    #        cv2.imread('input/templeR0017.png'), cv2.imread('input/templeR0018.png')]
-
-    run_sfm(imgs1, 1, False)
-    run_sfm(imgs1)
-    run_sfm(imgs2)
-    run_sfm(imgs3)
+    img = cv2.imread('input/p4-1-0.png')
+    kmeans_labels = run_kmeans(img)
+    print(labels)
+    #labels_to_im = 
+    #debug('img1', )
 
 
-    """
-    klt = KLT()
-    corners = None
-    try:
-        corners = np.load('corners.npy')
-        print('loaded')
-    except IOError:
-        corners = klt.feature_tracking(imgs)
-        np.save('corners.npy', corners)
-        print('ioerror')
-    sfm = Sfm()
-    sfm.structure_from_motion(imgs, corners)
-    """
-    
-    #VideoSfm('input/out.mp4')
     
 
 if __name__ == '__main__':
